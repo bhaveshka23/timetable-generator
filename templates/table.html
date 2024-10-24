@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated Timetable</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #f4f4f4; }
+        .save-form { margin: 20px 0; }
+        .button { 
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+        .button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h2>Generated Timetable</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Day/Time</th>
+                {% for time_slot in time_slots %}
+                    <th>{{ time_slot }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for day, slots in timetable %}
+            <tr>
+                <td><strong>{{ day }}</strong></td>
+                {% for slot in slots %}
+                    <td>{{ slot }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form method="POST" action="{% url 'save_timetable' %}" class="save-form">
+        {% csrf_token %}
+        <input type="hidden" name="timetable_data" value="{{ timetable|safe }}">
+        <input type="hidden" name="batch" value="{{ batch }}">
+        <div style="margin-bottom: 10px;">
+            <input type="text" name="timetable_name" placeholder="Enter timetable name" required 
+                   style="padding: 8px; margin-right: 10px; width: 200px;">
+        </div>
+        <button type="submit" class="button">Save Timetable</button>
+    </form>
+
+    <div class="actions">
+        <a href="{% url 'lecture' %}" class="button">Generate Another Timetable</a>
+        <a href="{% url 'saved_timetables' %}" class="button">View Saved Timetables</a>
+    </div>
+
+    {% if messages %}
+    <div class="messages" style="margin-top: 20px;">
+        {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}"
+                 style="padding: 10px; margin: 5px 0; border-radius: 4px; 
+                        {% if message.tags == 'success' %}background-color: #d4edda; color: #155724;{% endif %}
+                        {% if message.tags == 'error' %}background-color: #f8d7da; color: #721c24;{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>

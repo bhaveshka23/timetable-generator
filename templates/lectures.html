@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Lectures and Practicals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        form {
+            background-color: #faf7f0;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        select, input[type="number"], input[type="text"], button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        select, button {
+            cursor: pointer;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        td input {
+            width: 95%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        @media (max-width: 768px) {
+            form {
+                padding: 15px;
+            }
+            select, input[type="number"], input[type="text"], button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <h2>Enter the batch (Morning/Afternoon):</h2>
+        <label for="batch">Choose a batch:</label>
+        <select name="batch" id="batch">
+            <option value="Morning">Morning</option>
+            <option value="Afternoon">Afternoon</option>
+        </select>
+
+        <h3>Enter the Number of Lectures and Practicals</h3>
+        <label for="numLectures">Number of Lectures:</label>
+        <input type="number" id="numLectures" required min="1" onchange="generateLectureRows()">
+        <br>
+        <label for="numPracticals">Number of Practicals:</label>
+        <input type="number" id="numPracticals" required min="1" onchange="generatePracticalRows()">
+        
+        <h3>Lectures</h3>
+        <table id="lectureTable">
+            <thead>
+                <tr>
+                    <th>Lecture Name</th>
+                    <th>Number of Lectures per Week</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Lecture rows will be generated here -->
+            </tbody>
+        </table>
+
+        <h3>Practicals</h3>
+        <table id="practicalTable">
+            <thead>
+                <tr>
+                    <th>Practical Name</th>
+                    <th>Number of Practicals per Week</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Practical rows will be generated here -->
+            </tbody>
+        </table>
+
+        <button type="submit">Generate</button>
+    </form>
+
+    <script>
+        function generateLectureRows() {
+            const numLectures = document.getElementById('numLectures').value;
+            const lectureTableBody = document.querySelector('#lectureTable tbody');
+            lectureTableBody.innerHTML = ''; // Clear existing rows
+
+            for (let i = 0; i < numLectures; i++) {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="lectureName[]" required></td>
+                    <td><input type="number" name="lectureCount[]" required min="1"></td>
+                `;
+                lectureTableBody.appendChild(newRow);
+            }
+        }
+
+        function generatePracticalRows() {
+            const numPracticals = document.getElementById('numPracticals').value;
+            const practicalTableBody = document.querySelector('#practicalTable tbody');
+            practicalTableBody.innerHTML = ''; // Clear existing rows
+
+            for (let i = 0; i < numPracticals; i++) {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="practicalName[]" required></td>
+                    <td><input type="number" name="practicalCount[]" required min="1"></td>
+                `;
+                practicalTableBody.appendChild(newRow);
+            }
+        }
+
+        function validateForm() {
+            const lectureNames = document.querySelectorAll('input[name="lectureName[]"]');
+            const lectureCounts = document.querySelectorAll('input[name="lectureCount[]"]');
+            const practicalNames = document.querySelectorAll('input[name="practicalName[]"]');
+            const practicalCounts = document.querySelectorAll('input[name="practicalCount[]"]');
+
+            // Check if any lecture or practical is empty or has invalid counts
+            for (let i = 0; i < lectureNames.length; i++) {
+                if (!lectureNames[i].value || lectureCounts[i].value <= 0) {
+                    alert('Please provide valid lecture details.');
+                    return false;
+                }
+            }
+
+            for (let i = 0; i < practicalNames.length; i++) {
+                if (!practicalNames[i].value || practicalCounts[i].value <= 0) {
+                    alert('Please provide valid practical details.');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

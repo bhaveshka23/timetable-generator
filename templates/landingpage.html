@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeTableGenie</title>
+    <style>
+        body {
+            
+            font-family: 'Arial', sans-serif;
+            background-color: #faf7f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            max-width: 1200px;
+            margin-top:20px;
+            margin-left: 65px;
+        }
+        .left-section {
+            width: 60%;
+        }
+        .right-section {
+            width: 35%;
+            text-align: center;
+            padding-top: 50px;
+        }
+        h1 {
+            font-size: 29px;
+            font-weight: bold;
+            margin-left:4rem;
+            margin-bottom: -1rem;
+           
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -3.5rem;
+            box-shadow: 0 8px 4px #F7CAC9;
+            padding-bottom:16px;
+
+        }
+        .header button {
+            margin-right:6px;
+            margin-top: 15px;
+            background-color: #ccbba2;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .header button:hover {
+            background-color: #bc9f8b;
+        }
+        .phones {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .phone-img {
+            max-width: 300px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .right-section button {
+            display: block;
+            width: 100%;
+            height:10%;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 25px;
+            background-color: #ccbba2;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .right-section button:hover {
+            background-color: #bc9f8b;
+        }
+        .about-us {
+            padding: 20px;
+            background-color: #f0e4d2;
+            border-radius: 20px;
+            font-size: 20px;
+            line-height: 1.5;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .about-us h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+    
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .main-image {
+            width: 80%;
+            height: 80%;
+            animation: slideUp 5s ease-out;
+        
+        }
+        .logo{
+          height:56px;
+          width:65px;
+          margin-right:10px;
+        }
+        h1 a{
+            text-decoration:none;
+            color:black;
+            font-size: 38px;
+            padding:0;
+            margin-left:14px;
+        }
+       
+    </style>
+</head>
+<body>
+    <h1><a href=" ">TimeTableGenie</a></h1>
+    <div class="header">
+        <img class="logo" src="/static/tt.png" >
+    </div>
+    
+    <div class="container">
+
+        <div class="left-section">
+            <div class="container">
+                <img src="/static/image_full.png" alt="Main TimeTable Image" class="main-image">
+            </div>
+        </div>
+
+        <div class="right-section">
+            <button onclick="window.location.href='{% url 'login' %}'">LOG IN</button>
+            <button onclick="window.location.href='{% url 'signup' %}'">SIGN UP</button>
+
+            <div class="about-us">
+                <h2>About Us</h2>
+                <p>Welcome to TimeTableGenie!</p>
+                <p>At TimeTableGenie, we're dedicated to keeping your life organized, whether it's for your college schedule or daily routines. We design stunning timetable wallpapers for your iPhone lock screen, offering an easy-to-use timetable builder.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

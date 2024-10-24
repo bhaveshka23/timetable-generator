@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saved Timetables</title>
+    <style>
+        .timetable-list {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        .timetable-card {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .timetable-info {
+            flex-grow: 1;
+        }
+        .button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timetable-list">
+        <div class="header">
+            <h2>Your Saved Timetables</h2>
+            <a href="{% url 'lecture' %}" class="button">Create New Timetable</a>
+        </div>
+
+        {% if timetables %}
+            {% for timetable in timetables %}
+                <div class="timetable-card">
+                    <div class="timetable-info">
+                        <h3>{{ timetable.name }}</h3>
+                        <p>Batch: {{ timetable.batch }}</p>
+                        <p>Created: {{ timetable.created_at|date:"F j, Y, g:i a" }}</p>
+                    </div>
+                    <a href="{% url 'view_saved_timetable' timetable.id %}" class="button">View Timetable</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No saved timetables yet. Create your first timetable!</p>
+        {% endif %}
+    </div>
+</body>
+</html>

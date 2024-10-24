@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var icon = document.querySelector(".toggle-password");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            icon.innerHTML = "&#128064;"; // Change to 'open eye' icon
+        } else {
+            passwordInput.type = "password";
+            icon.innerHTML = "&#128065;"; // Change to 'closed eye' icon
+        }
+    }
+</script>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: url('/static/beige.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150vh;
+}
+
+.login-box {
+    margin-top:50px;
+    background: #ccbba2;
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    width: 400px;
+    box-shadow: 0 8px 5px black;
+}
+
+h2 {
+    margin-top:3px;
+    color: black;
+    margin-bottom: 30px;
+    font-size: 3em;
+    
+}
+
+.textbox {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.textbox input {
+    width: 100%;
+    padding: 13px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+}
+
+.btn { 
+    margin-top: 5px;
+    width: 40%;
+    padding: 13px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #CB6040;
+    color:white;
+    box-shadow: 2px 2px 2px 2px black;
+}
+
+p { 
+
+    margin-top: 30px;
+    color: black;
+    font-size:20px;
+    
+}
+
+p a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    text-decoration:underline;
+}
+
+
+.login-box #userlogo{
+    margin-top:-120px;
+    height:100px;
+    width:100px;
+    border-radius:60%;
+    background-color:white;
+}
+
+
+</style>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <img id="userlogo" src="/static/userlogo2.jpg">
+            <h2>Login</h2>
+            <form method='POST'>
+                {% csrf_token %}
+                <div class="textbox">
+                    <input type="email" placeholder="Email" name="email" required>
+                </div>
+                <div class="textbox">
+                    <input type="password" placeholder="Password" name="password" required>
+                    <span class="toggle-password" onclick="togglePassword()">&#128065;</span> <!-- Eye icon -->
+                </div>
+                
+                <button type="submit" class="btn">Login</button>
+                <p>Don’t have an account? <a href="/signup">Signup</a></p>
+                
+            </form>
+        </div>
+    </div>
+</body>
+</html>
